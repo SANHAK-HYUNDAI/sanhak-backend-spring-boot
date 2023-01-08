@@ -18,9 +18,8 @@ public class CategoryResponseAssembler {
         return new CASubCateResponse(category.getName(), category.getBigCategory().getName(), rate);
     }
 
-    public CABigCateResponse createCABigCateResponse(CABigCategory category, Long sum) {
-        double rate = (double) category.getCount() / sum;
-        return new CABigCateResponse(category.getName(), rate);
+    public CABigCateResponse createCABigCateResponse(CABigCategory category) {
+        return new CABigCateResponse(category.getName(), category.getCount());
     }
 
     public ROSubCateResponse createROSubCateResponse(ROSubCategory category, Long sum) {
@@ -28,8 +27,7 @@ public class CategoryResponseAssembler {
         return new ROSubCateResponse(category.getName(), category.getBigCategory().getName(), rate);
     }
 
-    public ROBigCateResponse createROBigCateResponse(ROBigCategory category, Long sum) {
-        double rate = (double) category.getCount() / sum;
-        return new ROBigCateResponse(category.getName(), rate);
+    public ROBigCateResponse createROBigCateResponse(ROBigCategory category) {
+        return new ROBigCateResponse(category.getName(), category.getCount());
     }
 }

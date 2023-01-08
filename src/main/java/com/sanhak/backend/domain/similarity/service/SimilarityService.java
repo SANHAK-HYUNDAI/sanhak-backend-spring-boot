@@ -18,8 +18,15 @@ public class SimilarityService {
     private final SimilarityRepository similarityRepository;
 
     public Page<Similarity> getSimilaritiesByBigPhenom(CAPageRequest request) {
-        Page<Similarity> result = similarityRepository.findAllByRepairOrder_BigPhenom(
+        Page<Similarity> result = similarityRepository.findDistinctByRepairOrder_BigPhenom(
                 request.getBigPhenom(), request.getPageRequest());
+
+        return result;
+    }
+
+    public List<Similarity> getAllSimilaritiesByBigPhenom(String bigPhenom){
+        List<Similarity> result = similarityRepository.findDistinctByRepairOrder_BigPhenom(
+                bigPhenom);
 
         return result;
     }

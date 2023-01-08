@@ -1,12 +1,8 @@
 package com.sanhak.backend.domain.category.service;
 
 import com.sanhak.backend.domain.category.dto.CategoryResponseAssembler;
-import com.sanhak.backend.domain.category.dto.response.CABigCateResponse;
-import com.sanhak.backend.domain.category.dto.response.CASubCateResponse;
 import com.sanhak.backend.domain.category.dto.response.ROBigCateResponse;
 import com.sanhak.backend.domain.category.dto.response.ROSubCateResponse;
-import com.sanhak.backend.domain.category.entity.CABigCategory;
-import com.sanhak.backend.domain.category.entity.CASubCategory;
 import com.sanhak.backend.domain.category.entity.ROBigCategory;
 import com.sanhak.backend.domain.category.entity.ROSubCategory;
 import com.sanhak.backend.domain.category.repository.ROBigCategoryRepository;
@@ -24,7 +20,7 @@ public class ROCategoryService {
     private final ROSubCategoryRepository roSubCategoryRepository;
     private final CategoryResponseAssembler responseAssembler;
 
-    public List<ROSubCateResponse> getTop10SubCategories() {
+    public List<ROSubCateResponse> getAllSubCategories() {
         List<ROSubCategory> result = roSubCategoryRepository.findAll();
         long sum = sumSubCateCount(result);
 
@@ -44,12 +40,11 @@ public class ROCategoryService {
         return sum;
     }
 
-    public List<ROBigCateResponse> getTop10BigCategories() {
+    public List<ROBigCateResponse> getAllBigCategories() {
         List<ROBigCategory> result = roBigCategoryRepository.findAll();
-        long sum = sumBigCateCount(result);
 
         List<ROBigCateResponse> responses = result.stream()
-                .map(category -> responseAssembler.createROBigCateResponse(category, sum))
+                .map(category -> responseAssembler.createROBigCateResponse(category))
                 .collect(Collectors.toUnmodifiableList());
 
         return responses;

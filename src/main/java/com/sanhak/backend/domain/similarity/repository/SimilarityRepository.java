@@ -14,5 +14,8 @@ public interface SimilarityRepository extends JpaRepository<Similarity, Long> {
     public List<Similarity> findAllByCafeArticle(CafeArticle cafeArticle);
 
     @EntityGraph(attributePaths = {"cafeArticle"})
-    public Page<Similarity> findAllByRepairOrder_BigPhenom(String bigPhenom, Pageable pageable);
+    public Page<Similarity> findDistinctByRepairOrder_BigPhenom(String bigPhenom, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"cafeArticle"})
+    public List<Similarity> findDistinctByRepairOrder_BigPhenom(String bigPhenom);
 }

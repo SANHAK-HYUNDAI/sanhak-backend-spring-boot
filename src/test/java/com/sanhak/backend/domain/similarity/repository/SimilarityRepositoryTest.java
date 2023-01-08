@@ -97,12 +97,12 @@ class SimilarityRepositoryTest {
     }
 
     @Test
-    public void findAllByRepairOrder_BigPhenomTest() throws Exception {
+    public void findAllByRepairOrder_BigPhenomWithPagingTest() throws Exception {
         //given
         String bigPhenom = "경고등 점등";
         CAPageRequest req = new CAPageRequest();
         //when
-        Page<Similarity> result = similarityRepository.findAllByRepairOrder_BigPhenom(bigPhenom,
+        Page<Similarity> result = similarityRepository.findDistinctByRepairOrder_BigPhenom(bigPhenom,
                 req.getPageRequest());
         //then
         int idx=1;
@@ -112,6 +112,20 @@ class SimilarityRepositoryTest {
             assertThat(similarity.getCafeArticle().getContent()).isEqualTo("content"+idx);
             assertThat(similarity.getId()).isEqualTo((idx-1)*4+1);
             idx++;
+        }
+    }
+
+    @Test
+    public void findAllByRepairOrder_BigPhenomWithoutPagingTest() throws Exception{
+        //given
+        String bigPhenom = "경고등 점등";
+        //when
+        List<Similarity> result = similarityRepository.findDistinctByRepairOrder_BigPhenom(
+                bigPhenom);
+        //then
+        assertThat(result.size()).isEqualTo(22);
+        for (Similarity similarity : result) {
+            assertThat(similarity.getId() % 4).isEqualTo(1);
         }
     }
 

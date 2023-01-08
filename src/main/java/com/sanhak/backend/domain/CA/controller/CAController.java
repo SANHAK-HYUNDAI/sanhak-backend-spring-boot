@@ -3,8 +3,10 @@ package com.sanhak.backend.domain.CA.controller;
 import com.sanhak.backend.domain.CA.dto.request.CAPageRequest;
 import com.sanhak.backend.domain.CA.dto.response.CAPageResponse;
 import com.sanhak.backend.domain.CA.dto.response.CADetailResponse;
+import com.sanhak.backend.domain.CA.dto.response.CASimpleResponse;
 import com.sanhak.backend.domain.CA.dto.response.CAStatisticsResponse;
 import com.sanhak.backend.domain.CA.service.CAService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,13 @@ public class CAController {
     @GetMapping
     public ResponseEntity<CAPageResponse> getCAsByBigPhenom(CAPageRequest caPageRequest) {
         CAPageResponse response = caService.getSimpleCAsByBigPhenom(caPageRequest);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<CASimpleResponse>> getAllCAsByBigPhenom(String bigPhenom) {
+        List<CASimpleResponse> response = caService.getAllCAsByBigPhenom(bigPhenom);
 
         return ResponseEntity.ok(response);
     }

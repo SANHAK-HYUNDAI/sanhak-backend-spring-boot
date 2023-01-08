@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public class CABigCateResponse {
 
-    private String name;
-    private Double rate;
+    private String label;
+    private Long value;
 
-    public CABigCateResponse(String name, Double rate) {
-        this.name = name;
-        this.rate = rate;
+    public CABigCateResponse(String label, Long value) {
+        this.label = label;
+        this.value = value;
     }
 }

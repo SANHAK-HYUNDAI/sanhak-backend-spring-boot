@@ -20,7 +20,7 @@ public class CACategoryService {
     private final CASubCategoryRepository caSubCategoryRepository;
     private final CategoryResponseAssembler responseAssembler;
 
-    public List<CASubCateResponse> getTop10SubCategories() {
+    public List<CASubCateResponse> getAllSubCategories() {
         List<CASubCategory> result = caSubCategoryRepository.findAll();
         long sum = sumSubCateCount(result);
 
@@ -40,12 +40,11 @@ public class CACategoryService {
         return sum;
     }
 
-    public List<CABigCateResponse> getTop10BigCategories() {
+    public List<CABigCateResponse> getAllBigCategories() {
         List<CABigCategory> result = caBigCategoryRepository.findAll();
-        long sum = sumBigCateCount(result);
 
         List<CABigCateResponse> responses = result.stream()
-                .map(category -> responseAssembler.createCABigCateResponse(category, sum))
+                .map(category -> responseAssembler.createCABigCateResponse(category))
                 .collect(Collectors.toUnmodifiableList());
 
         return responses;

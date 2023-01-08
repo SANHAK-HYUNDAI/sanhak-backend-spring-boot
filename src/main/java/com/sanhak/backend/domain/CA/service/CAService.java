@@ -14,9 +14,11 @@ import com.sanhak.backend.domain.category.dto.response.CASubCateResponse;
 import com.sanhak.backend.domain.category.service.CACategoryService;
 import com.sanhak.backend.domain.keyword.dto.response.KeywordResponse;
 import com.sanhak.backend.domain.keyword.service.CAKeywordService;
+import com.sanhak.backend.domain.similarity.entity.Similarity;
 import com.sanhak.backend.domain.similarity.service.SimilarityService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,14 @@ public class CAService {
         return responseAssembler.createCAPageResponse(result);
     }
 
+    public List<CASimpleResponse> getAllCAsByBigPhenom(String bigPhenom) {
+        List<CASimpleResponse> result = similarityService.getAllSimilaritiesByBigPhenom(bigPhenom).stream()
+                .map(similarity -> responseAssembler.createCASimpleResponse(similarity.getCafeArticle()))
+                .collect(Collectors.toUnmodifiableList());
+
+        return result;
+    }
+
     public CADetailResponse getDetailCAById(Long caId) {
         CafeArticle ca = caRepository.findById(caId)
                 .orElseThrow(EntityNotFoundException::new);
@@ -49,8 +59,8 @@ public class CAService {
 
     public CAStatisticsResponse getCAStatistics() {
         List<KeywordResponse> keywordResponses = keywordService.getTop50Keywords();
-        List<CASubCateResponse> subCateResponses = caCategoryService.getTop10SubCategories();
-        List<CABigCateResponse> bigCateResponses = caCategoryService.getTop10BigCategories();
+        List<CASubCateResponse> subCateResponses = caCategoryService.getAllSubCategories();
+        List<CABigCateResponse> bigCateResponses = caCategoryService.getAllBigCategories();
 
         return responseAssembler.createCAStatisticsResponse(keywordResponses, bigCateResponses, subCateResponses);
     }

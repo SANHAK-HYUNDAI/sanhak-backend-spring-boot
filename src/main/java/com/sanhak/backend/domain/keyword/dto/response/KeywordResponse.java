@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public class KeywordResponse {
 
-    private String word;
-    private Integer frequency;
+    private String text;
+    private Integer value;
 
-    public KeywordResponse(String word, Integer frequency) {
-        this.word = word;
-        this.frequency = frequency;
+    public KeywordResponse(String text, Integer value) {
+        this.text = text;
+        this.value = value;
     }
 }
